@@ -1,0 +1,20 @@
+.header
+{
+    padding: 8px;
+    background-color: black;
+}
+img{
+    height: 50px;
+}
+.meme-logo{
+    display: inline;
+    color:red; 
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 200%;
+}
+.zar-logo{
+    display: inline;
+    color:white; 
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 180%;
+}
