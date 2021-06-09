@@ -4,7 +4,7 @@ var compression = require('compression');
 const moment = require('moment-timezone');
 
 
-const meme = require('../routes/meme');
+const meme = require('../routes/memes');
 router.use('/', meme);
 
 module.exports = router;
