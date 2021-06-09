@@ -3,37 +3,34 @@ const express = require('express');
 const router = express.Router();
 const moment = require('moment-timezone');
 const mongoose = require('mongoose');
-const cmeme = require('../models/meme');
-const shortid = require('shortid');
+const meme = require('../models/meme');
 router.use(compression());
 
-router.get('/memes', async (req, res) => {
-    const c1 = await cmeme.find();
-    res.status(200).send(c1);
+router.get('/', async (req, res) => {
+    const allMemes = await meme.find();
+    res.status(200).send(allMemes);
 });
 
-router.get('/memes/:id', async (req,res) => {
+router.get('/:id', async (req,res) => {
     const id = req.params.id;
-    const d = await cmeme.find({id:id});
-    if(d.length>0) {
-        res.status(200).send(d);
+    const newMeme = await meme.find({id:id});
+    if(newMeme.length>0) {
+        res.status(200).send(newMeme);
     }
     else {
-        res.status(404).send(d);
+        res.status(404).send(newMeme);
     }
 });
 
-router.post('/memes', async (req,res) => {
-    let name= req.body.name;
-    let url= req.body.url;
-    let caption= req.body.caption;
+router.post('/', async (req,res) => {
+    let name = req.body.name;
+    let url = req.body.url;
+    let caption = req.body.caption;
     console.log(req);
-    let id=shortid.generate();
-    const c = new cmeme({
+    const newMeme = new meme({
         name: name,
         url: url,
         caption: caption,
-        id: id,
         reg_date: moment().tz("Asia/Kolkata").format('L'),
         reg_time: moment().tz("Asia/Kolkata").format('HH:mm:ss'),
     });
