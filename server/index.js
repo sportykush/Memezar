@@ -5,7 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
 const connectDB = require('./db/mongoose');
-const controller = require('./routes/controller');
+const controller = require('./controller/controller');
 
 connectDB();
 
