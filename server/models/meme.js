@@ -23,5 +23,5 @@ const memeschema= new Schema({
     }
     
 });
-const Memezar = mongoose.model('memezar', memeschema);
+const Memezar = mongoose.model('meme', memeschema);
 module.exports = Memezar;
