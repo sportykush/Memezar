@@ -1,57 +1,58 @@
 <div class="container">
-    <div >
-      <h1>New Post</h1>
-      <form (ngSubmit)="onSubmit()" #postForm="ngForm">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" id="name"
-                 required
-                 [(ngModel)]="model.name" name="name"
-                 #name="ngModel">
-          <div [hidden]="name.valid || name.pristine"
-               class="alert alert-danger">
-            Name is required
-          </div>
+  <div >
+    <h1>New Post</h1>
+    <form (ngSubmit)="saveMeme()" #heroForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name"
+               required
+               [(ngModel)]="model.name" name="name"
+               #name="ngModel">
+        <div [hidden]="name.valid || name.pristine"
+             class="alert alert-danger">
+          Name is required
         </div>
-  
-        <div class="form-group">
-          <label for="caption">Caption</label>
-          <input type="text" class="form-control" id="caption"
-                 [(ngModel)]="model.caption" name="caption">
+      </div>
+
+      <div class="form-group">
+        <label for="caption">Caption</label>
+        <input type="text" class="form-control" id="caption"
+               [(ngModel)]="model.caption" name="caption">
+      </div>
+
+      <div class="form-group">
+        <label for="url">URL</label>
+        <input type="text" class="form-control" id="url"
+               required
+               [(ngModel)]="model.url" name="url"
+               #url="ngModel">
+        <div [hidden]="url.valid || url.pristine"
+             class="alert alert-danger">
+             url is required
         </div>
-  
-        <div class="form-group">
-          <label for="url">URL</label>
-          <input type="text" class="form-control" id="url"
-                 required
-                 [(ngModel)]="model.url" name="url"
-                 #url="ngModel">
-          <div [hidden]="url.valid || url.pristine"
-               class="alert alert-danger">
-               url is required
-          </div>
-        </div>
-  
-        <button type="submit" class="btn btn-success" [disabled]="!postForm.form.valid">Post</button>
-      </form>
-    </div>
-  
-    <div [hidden]="!submitted">
-      <h2>You submitted the following:</h2>
-      <div class="row">
-        <div class="col-xs-3">Name</div>
-        <div class="col-xs-9">{{ model.name }}</div>
       </div>
-      <div class="row">
-        <div class="col-xs-3">Caption</div>
-        <div class="col-xs-9">{{ model.caption }}</div>
-      </div>
-      <div class="row">
-        <div class="col-xs-3">URL</div>
-        <div class="col-xs-9"><img src="{{ model.url }}" height="200" ></div>
-      </div>
-      
-      <br>
-      <button class="btn btn-primary" (click)="submitted=false">Edit</button>
-    </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Post</button>
+    </form>
   </div>
+
+  <div [hidden]="!submitted" class="xyz">
+    <h2>You submitted the following:</h2>
+    <div class="row">
+      <div class="col-xs-3">Name</div>
+      <div class="col-xs-9">{{ model.name }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Caption</div>
+      <div class="col-xs-9">{{ model.caption }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">URL</div>
+      <div class="col-xs-9"><img src="{{ model.url }}" height="200" ></div>
+    </div>
+    
+    <br>
+    <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+  </div>
+  
+</div>
