@@ -1,3 +1,4 @@
 # Memezar
 Angular webapp for posting memes
-MEAN Stack
+
+MEAN Stack web app
