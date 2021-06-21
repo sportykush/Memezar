@@ -7,8 +7,7 @@ const app = express();
 const connectDB = require('./db/mongoose');
 const controller = require('./controller/controller');
 
-// connectDB();
-// implement above function
+connectDB();
 
 app.use(cors());
 app.use(morgan('tiny'));

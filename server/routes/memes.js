@@ -60,7 +60,7 @@ router.post('/', async (req,res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while creating the Tutorial."
+                message: err.message || "Some error occurred while creating the Meme."
             });
         });
 });
@@ -86,7 +86,7 @@ router.patch('/:id', async (req,res) => {
     })
     .catch(err => {
         res.status(500).send({
-            message: err.message || "Some error occurred while creating the Tutorial."
+            message: err.message || "Some error occurred while creating the meme."
         });
     });
 });
