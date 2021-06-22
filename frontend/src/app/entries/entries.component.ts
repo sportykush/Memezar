@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MemeServiceService } from '../meme-service.service'
 import { Hero } from '../hero';
+// import {HttpClient} from '@angular/common/http';
+// import {Emitters} from '../emitters/emitters';
 
 @Component({
   selector: 'app-entries',
@@ -14,7 +16,21 @@ export class EntriesComponent {
   
   model = new Hero('name', this.cap, 'URL');  
   submitted = false;
-  constructor(private meme: MemeServiceService) { }
+  constructor(private meme: MemeServiceService,
+    //private http: HttpClient
+    ) { }
+
+  ngOnInit(): void {
+    // this.http.get('http://localhost:8000/api/user', {withCredentials: true}).subscribe(
+    //   (res: any) => {
+    //     Emitters.authEmitter.emit(true);
+    //   },
+    //   err => {
+    //     Emitters.authEmitter.emit(false);
+    //   }
+    // );
+  }
+
   onSubmit() { this.submitted = true; }
 
   saveMeme(): void {
@@ -34,13 +50,5 @@ export class EntriesComponent {
           console.log(err);
         });
   }
-
-  // newTutorial(): void {
-  //   this.submitted = false;
-  //   this.model = {
-  //     name: '',
-  //     caption: '',
-  //   };
-  // }
 
 }
