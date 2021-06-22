@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+require('dotenv').config();
 
 // router.get('/', async (req, res) => {
 //     const allUsers = await User.find();
@@ -72,7 +73,7 @@ router.post("/login", (req, res, next) => {
                 email: user[0].email,
                 userId: user[0]._id
               },
-              'secretKey',
+              process.env.JWT_PWT_KEY,
               {
                   expiresIn: "1h"
               }
