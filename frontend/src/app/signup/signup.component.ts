@@ -12,7 +12,7 @@ import { MemeUser } from '../memeuser';
 export class SignupComponent {
 
   model = new MemeUser('', '', '');  
-
+  error: any;
   constructor( private usersignup: SignupService,
     private router: Router  ) {  }
 
@@ -24,7 +24,15 @@ export class SignupComponent {
     };
     console.log(this.model);
     this.usersignup.create(data)
-      .subscribe(() => this.router.navigate(['/login']));
+      .subscribe(
+        res =>{
+          console.log(res);
+          () => this.router.navigate(['/login']);
+        },
+        err => {
+          console.log(err);
+          this.error = err;
+        });
   }
 
 }

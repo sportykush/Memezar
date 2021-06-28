@@ -1,16 +1,4 @@
 <app-logo></app-logo>
-<app-entries></app-entries>
-<table border="3" class ="xyz">
-    <tr>
-        <td>name</td>
-        <td>caption</td>
-        <td>Image</td>
-        <td>time</td>
-    </tr>
-    <tr *ngFor="let item of data">
-        <td>{{item['name']}} </td>
-        <td>{{item['caption']}} </td>
-        <td> <img src="{{item['url']}}" height="200" > </td>
-        <td>{{item['reg_time']}} </td>
-    </tr>
-</table>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

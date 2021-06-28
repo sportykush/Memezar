@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-// import {Emitters} from '../emitters/emitters';
-
+import {Emitters} from '../emitter/emitters';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-logo',
@@ -9,17 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogoComponent implements OnInit {
   authenticated = false;
-  constructor() { }
+
+  constructor(    private http: HttpClient) { }
 
   ngOnInit(): void {
-    // Emitters.authEmitter.subscribe(
-    //   (auth: boolean) => {
-    //     this.authenticated = auth;
-    //   }
-    // );
+    Emitters.authEmitter.subscribe(
+      (auth: boolean) => {
+        this.authenticated = auth;
+      }
+    );
   }
   logout(): void {
-    // this.http.post('http://localhost:8081/user/login', {}, {withCredentials: true})
-    //   .subscribe(() => this.authenticated = false);
+    this.http.post('http://localhost:8081/user/logout', {}, {withCredentials: true})
+      .subscribe(() => this.authenticated = false);
   }
 }

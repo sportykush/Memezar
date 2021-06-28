@@ -1,4 +1,7 @@
 <div class="container">
+  <div class="aler alert-danger xyz" role="alert" *ngIf="error" >
+    <strong>An Error Occured </strong> Invalid Credentials
+  </div>
     <form #loginForm="ngForm" (ngSubmit)="authUser()">
       <h1 class="h3 mb-3 fw-normal">Log In</h1>
   
@@ -26,6 +29,7 @@
           </div>
         </div>
   
-        <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid">Login</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!loginForm.form.valid">Login</button>
       </form>
    </div>
+

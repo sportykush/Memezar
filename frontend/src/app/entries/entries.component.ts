@@ -1,54 +1,56 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MemeServiceService } from '../meme-service.service'
 import { Hero } from '../hero';
-// import {HttpClient} from '@angular/common/http';
-// import {Emitters} from '../emitters/emitters';
+import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {Emitters} from '../emitter/emitters';
 
 @Component({
   selector: 'app-entries',
   templateUrl: './entries.component.html',
   styleUrls: ['./entries.component.css']
 })
-export class EntriesComponent {
+export class EntriesComponent implements OnInit {
   
-
+  message = '';
   cap = 'Really Catchy';
-  
-  model = new Hero('name', this.cap, 'URL');  
+  name = '';
+  authenticated = false;
   submitted = false;
   constructor(private meme: MemeServiceService,
-    //private http: HttpClient
+    private http: HttpClient,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
-    // this.http.get('http://localhost:8000/api/user', {withCredentials: true}).subscribe(
-    //   (res: any) => {
-    //     Emitters.authEmitter.emit(true);
-    //   },
-    //   err => {
-    //     Emitters.authEmitter.emit(false);
-    //   }
-    // );
+    Emitters.authEmitter.subscribe(
+      (auth: boolean) => {
+        this.authenticated = auth;
+      }
+    );
+    this.http.get('http://localhost:8081/user/me', {withCredentials: true}).subscribe(
+      (res: any) => {
+        this.message = `Hi ${res.name}`;
+        this.name = res.name;
+        Emitters.authEmitter.emit(true);
+      },
+      (err: any) => {
+        this.message = 'You are not logged in';
+        Emitters.authEmitter.emit(false);
+      }
+    );
   }
-
-  onSubmit() { this.submitted = true; }
-
+  model = new Hero(this.name, this.cap, 'URL');
   saveMeme(): void {
     const data = {
-      name: this.model.name,
+      name: this.name,
       caption: this.model.caption,
       url: this.model.url
     };
 
     this.meme.create(data)
-      .subscribe(
-        (        data: any) => {
-          console.log(data);
-          this.submitted = true;
-        },
-        (        err: any) => {
-          console.log(err);
-        });
+    .subscribe(() => this.router.navigate(['/meme']));
   }
+
 
 }

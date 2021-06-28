@@ -10,8 +10,11 @@
     <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
   </form> -->
 
+  <div class="aler alert-danger xyz" role="alert" *ngIf="error" >
+    <strong>An Error Occured </strong> Email exists
+  </div>
   
-  <div class="container">
+<div class="container">
   <form (ngSubmit)="saveUser()" #signupForm="ngForm">
     <h1 class="h3 mb-3 fw-normal">Register</h1>
 
@@ -51,6 +54,6 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-success" [disabled]="!signupForm.form.valid">Submit</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!signupForm.form.valid">Submit</button>
     </form>
  </div>
