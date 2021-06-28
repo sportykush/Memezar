@@ -6,7 +6,7 @@ const moment = require('moment-timezone');
 const meme = require('../routes/memes');
 const users = require('../routes/users');
 
-router.use('/', meme);
+router.use('/memes', meme);
 router.use('/user', users);
 
 module.exports = router;

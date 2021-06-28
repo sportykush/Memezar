@@ -2,14 +2,11 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 require('dotenv').config();
+const auth = require("../middleware/auth");
 
-// router.get('/', async (req, res) => {
-//     const allUsers = await User.find();
-//     res.status(200).send(allUsers);
-// });
 
 router.post("/signup", (req, res, next) => {
   User.find({ email: req.body.email })
@@ -70,17 +67,22 @@ router.post("/login", (req, res, next) => {
           if (result) {
             const token = jwt.sign(
               {
-                email: user[0].email,
-                userId: user[0]._id
+                // email: user[0].email,
+                _id: user[0]._id
               },
-              process.env.JWT_PWT_KEY,
-              {
-                  expiresIn: "1h"
-              }
+              process.env.JWT_PWT_KEY
+              // {
+              //     expiresIn: "1h"
+              // }
             );
+            res.header('x-auth-token', token);
+            res.cookie('jwt', token, {
+              httpOnly: true,
+              maxAge: 24 * 60 * 60 * 1000 // 1 day
+            });
             return res.status(200).json({
               message: "Auth successful",
-              token: token
+              //token: token
             });
           }
           res.status(401).json({
@@ -96,20 +98,35 @@ router.post("/login", (req, res, next) => {
       });
   });
 
-// router.delete("/:userId", (req, res, next) => {
-//   User.remove({ _id: req.params.userId })
-//     .exec()
-//     .then(result => {
-//       res.status(200).json({
-//         message: "User deleted"
-//       });
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       res.status(500).json({
-//         error: err
-//       });
-//     });
-// });
+router.get('/me', async (req, res) => {
+
+  try {
+        const cookie = req.cookies['jwt'];
+
+        const claims = jwt.verify(cookie, process.env.JWT_PWT_KEY);
+        
+        if (!claims) {
+            return res.status(401).send({
+                message: 'unauthenticated'
+            })
+        }
+        
+        const user = await User.findOne({_id: claims._id});
+        const {password, ...data} = await user.toJSON();
+        res.send(data);
+
+    } catch (e) {
+        return res.status(401).send({
+            message: 'no cookie provided',
+        })
+    }
+});
+
+router.post('/logout', (req, res) => {
+  res.cookie('jwt', '', {maxAge: 0})
+  res.send({
+    message: 'logout success'
+  })
+});
 
 module.exports = router;

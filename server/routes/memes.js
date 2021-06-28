@@ -66,17 +66,8 @@ router.post('/', async (req,res) => {
 });
 
 
-
-    // complete put post delete by tomorrow.
-    // get is ready.
-    // integrate with mongoose.
-
 router.patch('/:id', async (req,res) => {
     const id = req.params.id;
-    // const updateOps = {};
-    // for(const ops of req.body) {
-    //     updateOps[ops.propName] = ops.value
-    // }
     meme.update({_id: id}, { $set: {name: req.body.name,
         caption: req.body.caption,
         url: req.body.url}})
